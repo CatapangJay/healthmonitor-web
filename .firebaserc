@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "healthline-d72e6": {
+      "hosting": {
+        "health-monitor-web": [
+          "healthline-d72e6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "healthline-d72e6"
+  }
+}

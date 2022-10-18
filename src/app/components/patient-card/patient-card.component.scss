@@ -1,0 +1,132 @@
+.patient-card {
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em 28px;
+    gap: 10px;
+    width: 300px;
+    height: auto;
+    background: #ffffff;
+    box-shadow: 4px 4px 27px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    color: #75787d;
+}
+
+    .patient-card .patient-card-heading {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1rem;
+        /* Inside auto layout */
+
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    .patient-card .patient-image {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center center;
+    }
+
+    .patient-card .patient-pulse {
+        height: 100px;
+        width: 100px;
+        float: left;
+        position: relative;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #FF9B93;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 0;
+    }
+
+    .patient-card .animate {
+        animation: pulsate 0.5s;
+    }
+    
+        .patient-card .patient-pulse:after {
+            content: '';
+            background: white;
+            position: absolute;
+            border-radius: 50%;
+            border: 7px solid #FF9B93;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+
+    .patient-card .patient-container {
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+        .patient-card .patient-container > .patient-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .patient-card .patient-container > .patient-id {
+            font-size: 0.8rem;
+            margin: 0px;
+        }
+
+        .patient-card .patient-container > .patient-status-title,
+        .patient-card .patient-container > .patient-dob-title,
+        .patient-card .patient-container > .patient-age-title {
+            font-size: 0.8rem;
+            margin: 0px;
+            margin-top: 3px;
+        }
+
+        .patient-card .patient-container > .patient-dob,
+        .patient-card .patient-container > .patient-age {
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 0px;
+        }
+
+        .patient-card .patient-container > .patient-status {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin: 0px;
+            color: #47B2AA
+        }
+
+@keyframes pulsate {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.2, 1.2);
+    }
+
+    100% {
+        transform: scale(1,1);
+    }
+}

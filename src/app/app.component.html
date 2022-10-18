@@ -1,0 +1,16 @@
+<div class="d-flex flex-column flex-nowrap h-100 w-100">
+  <nav app-header [companyName]="title" class="navbar bg-theme"></nav>
+  <div class="container-fluid row flex-grow-1 p-0 m-0">
+    <div class="row flex-grow-1 p-0 m-0">
+      <nav
+        app-sidenav
+        id="sidebarMenu"
+        class="col-md-3 col-lg-2 d-md-block sidebar collapse side-nav"
+      ></nav>
+      <main
+        app-main-content
+        class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-container"
+      ></main>
+    </div>
+  </div>
+</div>

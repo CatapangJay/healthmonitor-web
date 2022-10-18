@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+$main-color: #4FAEA9;
+$body-color: #F7F7FF;
+
+html, body {
+    height: 100%;
+}
+
+.bg-theme {
+    background-color: $main-color  !important;
+}
+
+.app-title {
+    color: white !important;
+    font-style: normal;
+    text-align: center;
+    letter-spacing: 0.35em;
+}
+
+.side-nav {
+    background-color: white !important;
+}
+.main-container {
+    background-color: $body-color !important;
+}
