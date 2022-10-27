@@ -11,17 +11,29 @@
   </div>
   <div class="patient-container">
     <p class="patient-age-title">Age</p>
-    <p class="patient-age">34 years old</p>
+    <p class="patient-age">{{ age }} years old</p>
   </div>
   <div class="patient-container">
     <p class="patient-dob-title">Date of Birth</p>
-    <p class="patient-dob">January 4, 1856</p>
+    <p class="patient-dob">{{ birthDate.toDate() | date: "mediumDate" }}</p>
   </div>
   <div class="patient-container">
     <p class="patient-status-title">Status</p>
-    <p class="patient-status">FINE</p>
+    <p
+      class="patient-status"
+      [ngClass]="{
+        'text-danger':
+          status == 'CRITICALLY HIGH' || status == 'CRITICALLY LOW',
+        'text-warning': status == 'N/A',
+        'text-success': status == 'FINE'
+      }"
+    >
+      {{ status }}
+    </p>
   </div>
   <div class="patient-container">
-    <button type="button" class="btn btn-warning" (click)="notifyPatient()">ALERT Patient!</button>
+    <button type="button" class="btn btn-warning" (click)="notifyPatient()">
+      ALERT Patient!
+    </button>
   </div>
 </div>

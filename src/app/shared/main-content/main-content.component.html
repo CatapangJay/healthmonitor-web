@@ -10,6 +10,7 @@
       [patientId]="patient.Id"
       [patientName]="(patient.Lastname | uppercase) + ', ' + patient.Firstname + ' ' + ( patient.Middlename[0] | uppercase ) + '.'"
       [imageUrl]="patient.ImageUrl"
+      [birthDate]="patient.BirthDate"
     ></app-patient-card>
   </ng-container>
 </div>

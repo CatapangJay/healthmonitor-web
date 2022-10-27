@@ -5,6 +5,7 @@ export class PatientInfo {
         public MiddleName: string,
         public LastName: string,
         public ImageUrl: string,
+        public BirthDate: Date,
         public email: string,
         public phoneNumber: string,
         public street: string,
