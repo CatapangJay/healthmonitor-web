@@ -1,0 +1,81 @@
+<div class="modal-dialog modal-dialog-centered text-black modal-lg">
+  <div class="modal-content">
+    <div class="modal-header bg-primary text-white ps-4">
+      <h5 class="modal-title text-truncate">
+        {{
+          (patientInfo?.Lastname | uppercase) +
+            ", " +
+            patientInfo?.Firstname +
+            " " +
+            (patientInfo?.Middlename[0] | uppercase) +
+            "."
+        }}
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="container row">
+      <div class="container px-4 col">
+        <h5 class="card-title py-2 border-bottom">Patient Information</h5>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-md-7 label fw-bold">First Name</div>
+          <div class="col-lg-7 col-md-5">{{ patientInfo?.Firstname }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-md-7 label fw-bold">Middle Name</div>
+          <div class="col-lg-7 col-md-5">{{ patientInfo?.Middlename }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-md-7 label fw-bold">Last Name</div>
+          <div class="col-lg-7 col-md-5">{{ patientInfo?.Lastname }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-md-7 label fw-bold">Birth Date</div>
+          <div class="col-lg-7 col-md-5">
+            {{ patientInfo?.BirthDate?.toDate() | date : "mediumDate" }}
+          </div>
+        </div>
+        <!-- <div class="row mb-2">
+          <div class="col-lg-5 col-md-7 label fw-bold">Address</div>
+          <div class="col-lg-7 col-md-5">{{ patientInfo?.address }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-md-7 label fw-bold">Phone</div>
+          <div class="col-lg-7 col-md-5">{{ patientInfo?.phoneNumber }}</div>
+        </div> -->
+        <!-- <div class="row">
+          <div class="col-lg-5 col-md-7 label fw-bold">Email</div>
+          <div class="col-lg-7 col-md-5">{{ patientInfo?.email }}</div>
+        </div> -->
+      </div>
+      <!-- <div class="col" style="max-height: 80vh; overflow: scroll">
+        <table class="table table-primary table-striped table-hover">
+          <thead>
+            <th scope="col">#</th>
+            <th scope="col">Date Logged</th>
+            <th scope="col">Heart Rate</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hr of hrHistory; let i = index">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{ hr.dateAdded?.toDate() | date : "MMM d, y, h:mm a" }}</td>
+              <td>{{ hr.pulse }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button type="button" class="btn btn-danger fw-bold text-white">
+        Alert Patient
+      </button>
+    </div>
+  </div>
+</div>

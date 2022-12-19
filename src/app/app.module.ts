@@ -9,10 +9,15 @@ import { HeaderComponent } from './shared/header/header.component';
 import { MainContentComponent } from './shared/main-content/main-content.component';
 import { environment } from '../environments/environment';
 import { PatientService } from './services/patient.service';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { HeartrateService } from './services/heartrate.service';
 import { NotificationService } from './services/notification.service';
+import { CreatePatientComponent } from './components/create-patient/create-patient.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ViewPatientComponent } from './components/view-patient/view-patient.component';
+import { ViewPatientDetailsComponent } from './view-patient-details/view-patient-details.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +25,18 @@ import { NotificationService } from './services/notification.service';
     SidenavComponent,
     PatientCardComponent,
     HeaderComponent,
-    MainContentComponent
+    MainContentComponent,
+    CreatePatientComponent,
+    ViewPatientComponent,
+    ViewPatientDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule, // for firestore
+    AngularFirestoreModule
   ],
   providers: [PatientService, HeartrateService, NotificationService],
   bootstrap: [AppComponent]

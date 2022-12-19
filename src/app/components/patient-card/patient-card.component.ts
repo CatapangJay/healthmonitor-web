@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
 import { PatientNotif } from 'src/app/models/patient-notif';
 import { HeartrateService } from 'src/app/services/heartrate.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Timestamp } from '@firebase/firestore-types';
+import { ViewPatientComponent } from '../view-patient/view-patient.component';
+import { PatientInfo } from 'src/app/models/patient-info';
 
 @Component({
   selector: 'app-patient-card',
@@ -13,12 +15,15 @@ import { Timestamp } from '@firebase/firestore-types';
 export class PatientCardComponent implements OnInit {
   @Input() patientId: string;
   @Input() patientName: string;
+  @Input() patientInitials: string;
   @Input() imageUrl: string;
   @Input() birthDate: Timestamp;
+  @Input() patientInfo: PatientInfo;
   public age: number;
   public pulse: string;
   public receivedPulse: boolean;
   public status: STATUS;
+  @ViewChild(ViewPatientComponent) patientModal!: ViewPatientComponent;
 
   constructor(private heartRateService: HeartrateService,
     private notifService: NotificationService) { }
@@ -51,6 +56,12 @@ export class PatientCardComponent implements OnInit {
     })
   }
 
+  openPatientInfoModal() {
+    // this.patientModal.patientInfo = this.patientInfo;
+    this.patientModal.initializePatient(this.patientInfo);
+    // this.patientModal.getPatientHeartrates();
+  }
+
   notifyPatient() {
     let patientNotif = new PatientNotif();
     patientNotif.patientId = this.patientId;
@@ -67,7 +78,7 @@ export class PatientCardComponent implements OnInit {
       });
   }
 
-  private getStatus(pulse: number) : STATUS {
+  private getStatus(pulse: number): STATUS {
     let status = STATUS.FINE;
     if (this.age <= 20) {
       if (pulse < 100) status = STATUS.CRITICALLY_LOW;
@@ -102,22 +113,26 @@ export class PatientCardComponent implements OnInit {
       else if (pulse > 136) status = STATUS.CRITICALLY_HIGH;
     }
     else if (this.age > 60 && this.age <= 65) {
-      if (pulse < 78) status = STATUS.CRITICALLY_LOW;
-      else if (pulse > 132) status = STATUS.CRITICALLY_HIGH;
+      if (pulse < 60) status = STATUS.CRITICALLY_LOW;
+      else if (pulse > 100) status = STATUS.CRITICALLY_HIGH;
     }
     else if (this.age > 65 && this.age <= 70) {
-      if (pulse < 75) status = STATUS.CRITICALLY_LOW;
-      else if (pulse > 128) status = STATUS.CRITICALLY_HIGH;
+      if (pulse < 60) status = STATUS.CRITICALLY_LOW;
+      else if (pulse > 100) status = STATUS.CRITICALLY_HIGH
     }
 
     return status;
   }
 
+  isEmptyOrUndefined(str: string): boolean {
+    return str === undefined || str.length === 0;
+  }
+
 }
 
 export enum STATUS {
-    NO_DATA = "N/A",
-    FINE = "FINE",
-    CRITICALLY_LOW = "CRITICALLY LOW",
-    CRITICALLY_HIGH = "CRITICALLY HIGH"
+  NO_DATA = "N/A",
+  FINE = "FINE",
+  CRITICALLY_LOW = "CRITICALLY LOW",
+  CRITICALLY_HIGH = "CRITICALLY HIGH"
 }

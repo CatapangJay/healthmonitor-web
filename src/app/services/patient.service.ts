@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
 import { Observable } from 'rxjs';
 import { PatientInfo } from '../models/patient-info';
@@ -19,5 +19,9 @@ export class PatientService {
 
   public getPatientById(id:number) {
 
+  }
+
+  public createPatient(patient: PatientInfo){
+    return this.patientsRef.add({...patient});
   }
 }

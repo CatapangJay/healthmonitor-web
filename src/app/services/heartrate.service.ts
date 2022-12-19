@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable, Subject, switchMap } from 'rxjs';
 import { PatientPulse } from '../models/patient-pulse';
 
@@ -25,5 +25,11 @@ export class HeartrateService {
      return this.db.collection<PatientPulse>(
       this.dbPath,
       ref => ref.where('patientId', '==', patientId).orderBy('dateAdded', 'desc').limit(1));
+  }
+
+  getAllByPatientId(patientId: string): AngularFirestoreCollection<PatientPulse>{
+     return this.db.collection<PatientPulse>(
+      this.dbPath,
+      ref => ref.where('patientId', '==', patientId).orderBy('dateAdded', 'desc'));
   }
 }

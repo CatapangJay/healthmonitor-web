@@ -1,15 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-$main-color: #4FAEA9;
+$primary: #4FAEA9;
 $body-color: #F7F7FF;
+$warning: #f1b443;
+
+// $theme-colors: (
+//   "primary": $main-color,
+//   "warning": #f1b443
+// );
+
+// Bootstrap and its default variables
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 html, body {
     height: 100%;
 }
 
-.bg-theme {
-    background-color: $main-color  !important;
+.btn-primary {
+    color: white;
+}
+
+.form-control {
+    color: rgb(24, 24, 24) !important;
 }
 
 .app-title {

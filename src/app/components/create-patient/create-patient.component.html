@@ -1,0 +1,126 @@
+<div class="modal-dialog modal-xl text-black">
+  <div class="modal-content">
+    <!-- <form [formGroup]="bookingFormGroup" (submit)="submitBooking()"> -->
+    <form [formGroup]="patientForm" (ngSubmit)="submit()">
+      <div class="modal-header bg-primary text-white">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Patient</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <label for="floatingPickupDate" class="col-form-label pb-0"
+            >Basic Info</label
+          >
+          <div class="col-lg-4">
+            <div class="form-floating">
+              <input
+                type="text"
+                formControlName="lastName"
+                class="form-control"
+                id="lastName"
+                placeholder="Last Name"
+              />
+              <label for="lastName">Last Name</label>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-floating">
+              <input
+                type="text"
+                formControlName="firstName"
+                class="form-control"
+                id="firstName"
+                placeholder="First Name"
+              />
+              <label for="floatingContactPerson">First Name</label>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-floating">
+              <input
+                type="text"
+                formControlName="middleName"
+                class="form-control"
+                id="middleName"
+                placeholder="Middle Name"
+              />
+              <label for="middleName">Middle Name</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="date"
+                formControlName="birthdate"
+                class="form-control"
+                id="birthdate"
+                placeholder="Date of Birth"
+              />
+              <label for="birthdate">Date of Birth</label>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <input
+              type="file"
+              formControlName="patientImg"
+              class="form-control"
+              id="patientImg"
+              placeholder="Patient Picture (Optional)"
+            />
+          </div>
+          <div class="col-md-12">
+            <div class="form-floating">
+              <textarea
+                class="form-control"
+                formControlName="address"
+                placeholder="Address"
+                id="address"
+                style="height: 100px"
+              ></textarea
+              ><label for="address">Address</label>
+            </div>
+          </div>
+          <label
+            for="floatingDescription"
+            class="col-form-label border-top pb-0"
+            >Contact Information</label
+          >
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="email"
+                formControlName="email"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+              />
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                formControlName="contactno"
+                class="form-control"
+                id="contactno"
+                placeholder="Phone Number"
+              />
+              <label for="contactno">Phone Number</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-pencil-fill me-2"></i>Submit Booking
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

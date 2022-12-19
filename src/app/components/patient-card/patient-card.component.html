@@ -1,13 +1,29 @@
 <div class="patient-card">
   <div class="patient-card-heading">
-    <img [src]="imageUrl" class="patient-image" alt="Profile picture" />
+    <img
+      [src]="imageUrl"
+      class="patient-image"
+      alt="Profile picture"
+      *ngIf="!isEmptyOrUndefined(imageUrl)"
+    />
+    <div
+      class="rounded-circle d-flex align-items-center justify-content-center"
+      id="empty-img"
+      *ngIf="isEmptyOrUndefined(imageUrl)"
+    >
+      <p
+        class="text-center text-white m-0 fs-2 fw-bold"
+        style="letter-spacing: 3px"
+      >
+        {{ patientInitials }}
+      </p>
+    </div>
     <div class="patient-pulse" [class.animate]="receivedPulse">
       <div class="pulse-rate">{{ pulse }}</div>
     </div>
   </div>
   <div class="patient-container">
     <p class="patient-name">{{ patientName }}</p>
-    <p class="patient-id">{{ patientId | number: "3." }}</p>
   </div>
   <div class="patient-container">
     <p class="patient-age-title">Age</p>
@@ -15,7 +31,7 @@
   </div>
   <div class="patient-container">
     <p class="patient-dob-title">Date of Birth</p>
-    <p class="patient-dob">{{ birthDate.toDate() | date: "mediumDate" }}</p>
+    <p class="patient-dob">{{ birthDate.toDate() | date : "mediumDate" }}</p>
   </div>
   <div class="patient-container">
     <p class="patient-status-title">Status</p>
@@ -32,8 +48,21 @@
     </p>
   </div>
   <div class="patient-container">
-    <button type="button" class="btn btn-warning" (click)="notifyPatient()">
-      ALERT Patient!
+    <!-- <button type="button" class="btn btn-warning" (click)="notifyPatient()"> -->
+    <button
+      type="button"
+      class="btn btn-warning"
+      data-bs-toggle="modal"
+      data-bs-target="#viewpatientmodal"
+      (click)="openPatientInfoModal()"
+    >
+      View Patient
     </button>
   </div>
 </div>
+
+<app-view-patient
+  class="modal fade"
+  id="viewpatientmodal"
+  tabindex="-1"
+></app-view-patient>

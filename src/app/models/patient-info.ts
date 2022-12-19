@@ -1,15 +1,16 @@
+import { Timestamp } from '@firebase/firestore-types';
+
 export class PatientInfo {
     constructor(
-        public Id: number,
+        public Id: string,
         public Firstname: string,
-        public MiddleName: string,
-        public LastName: string,
+        public Middlename: string,
+        public Lastname: string,
         public ImageUrl: string,
-        public BirthDate: Date,
+        public BirthDate: Timestamp,
         public email: string,
         public phoneNumber: string,
-        public street: string,
-        public city: string,
-        public province: string) {
+        public address: string
+        ) {
     }
 }

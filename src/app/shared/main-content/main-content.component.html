@@ -6,11 +6,119 @@
 
 <div class="d-flex justify-content-start gap-3 flex-wrap">
   <ng-container *ngFor="let patient of patientsInfo">
-    <app-patient-card
+    <div class="patient-card">
+      <div class="patient-card-heading">
+        <img
+          [src]="patient.ImageUrl"
+          class="patient-image"
+          alt="Profile picture"
+          *ngIf="!isEmptyOrUndefined(patient.ImageUrl)"
+        />
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center"
+          id="empty-img"
+          *ngIf="isEmptyOrUndefined(patient.ImageUrl)"
+        >
+          <p
+            class="text-center text-white m-0 fs-2 fw-bold"
+            style="letter-spacing: 3px"
+          >
+            {{ (patient.Firstname[0] | uppercase) + (patient.Lastname[0] | uppercase) }}
+          </p>
+        </div>
+        <!-- <div class="patient-pulse" [class.animate]="receivedPulse"> -->
+        <div class="patient-pulse">
+          <div class="pulse-rate">{{ getPulse(patient.Id) }}</div>
+        </div>
+      </div>
+      <div class="patient-container">
+        <p class="patient-name">{{ (patient.Lastname | uppercase) +
+          ', ' +
+          patient.Firstname +
+          ' ' +
+          (patient.Middlename[0] | uppercase) +
+          '.' }}</p>
+      </div>
+      <div class="patient-container">
+        <p class="patient-age-title">Age</p>
+        <p class="patient-age">{{ getAge(patient.BirthDate.toDate()) }} years old</p>
+      </div>
+      <div class="patient-container">
+        <p class="patient-dob-title">Date of Birth</p>
+        <p class="patient-dob">{{ patient.BirthDate.toDate() | date : "mediumDate" }}</p>
+      </div>
+      <div class="patient-container">
+        <p class="patient-status-title">Status</p>
+        <!-- <p
+          class="patient-status"
+          [ngClass]="{
+            'text-danger':
+            getStatus(getAge(patient.BirthDate.toDate()), ) == 'CRITICALLY HIGH' || status == 'CRITICALLY LOW',
+            'text-warning': status == 'N/A',
+            'text-success': status == 'FINE'
+          }"
+        >
+          {{ status }}
+        </p> -->
+      </div>
+      <div class="patient-container">
+        <!-- <button type="button" class="btn btn-warning" (click)="notifyPatient()"> -->
+        <button
+          type="button"
+          class="btn btn-warning"
+          data-bs-toggle="modal"
+          data-bs-target="#viewpatientmodal"
+          (click)="openPatientInfoModal(patient)"
+        >
+          View Patient
+        </button>
+      </div>
+    </div>
+    <!-- <app-patient-card
+      [patientInfo]="patient"
       [patientId]="patient.Id"
-      [patientName]="(patient.Lastname | uppercase) + ', ' + patient.Firstname + ' ' + ( patient.Middlename[0] | uppercase ) + '.'"
-      [imageUrl]="patient.ImageUrl"
+      [patientInitials]="
+        (patient.Firstname[0] | uppercase) + (patient.Lastname[0] | uppercase)
+      "
+      [patientName]="
+        (patient.Lastname | uppercase) +
+        ', ' +
+        patient.Firstname +
+        ' ' +
+        (patient.Middlename[0] | uppercase) +
+        '.'
+      "
+      [imageUrl]="patient!.ImageUrl"
       [birthDate]="patient.BirthDate"
-    ></app-patient-card>
+    ></app-patient-card> -->
   </ng-container>
 </div>
+
+<div
+  class="dropup m-5"
+  style="position: fixed; right: 0; bottom: 0; z-index: 1030"
+>
+  <button
+    type="button"
+    class="btn btn-primary btn-lg rounded-circle text-white"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+    style="width: 60px; height: 60px"
+  >
+    <i class="bi bi-person-plus-fill"></i>
+  </button>
+</div>
+
+<app-create-patient
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+></app-create-patient>
+
+<app-view-patient
+  class="modal fade"
+  id="viewpatientmodal"
+  tabindex="-1"
+></app-view-patient>
