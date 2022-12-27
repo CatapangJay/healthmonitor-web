@@ -23,29 +23,43 @@
             class="text-center text-white m-0 fs-2 fw-bold"
             style="letter-spacing: 3px"
           >
-            {{ (patient.Firstname[0] | uppercase) + (patient.Lastname[0] | uppercase) }}
+            {{
+              (patient.Firstname[0] | uppercase) +
+                (patient.Lastname[0] | uppercase)
+            }}
           </p>
         </div>
         <!-- <div class="patient-pulse" [class.animate]="receivedPulse"> -->
-        <div class="patient-pulse">
+        <!-- <div class="patient-pulse">
           <div class="pulse-rate">{{ getPulse(patient.Id) }}</div>
+        </div> -->
+        <div class="patient-pulse">
+          <div class="pulse-rate" [id]="'pulse-rate-'+ patient.Id"></div>
         </div>
       </div>
       <div class="patient-container">
-        <p class="patient-name">{{ (patient.Lastname | uppercase) +
-          ', ' +
-          patient.Firstname +
-          ' ' +
-          (patient.Middlename[0] | uppercase) +
-          '.' }}</p>
+        <p class="patient-name">
+          {{
+            (patient.Lastname | uppercase) +
+              ", " +
+              patient.Firstname +
+              " " +
+              (patient.Middlename[0] | uppercase) +
+              "."
+          }}
+        </p>
       </div>
       <div class="patient-container">
         <p class="patient-age-title">Age</p>
-        <p class="patient-age">{{ getAge(patient.BirthDate.toDate()) }} years old</p>
+        <p class="patient-age">
+          {{ getAge(patient.BirthDate.toDate()) }} years old
+        </p>
       </div>
       <div class="patient-container">
         <p class="patient-dob-title">Date of Birth</p>
-        <p class="patient-dob">{{ patient.BirthDate.toDate() | date : "mediumDate" }}</p>
+        <p class="patient-dob">
+          {{ patient.BirthDate.toDate() | date : "mediumDate" }}
+        </p>
       </div>
       <div class="patient-container">
         <p class="patient-status-title">Status</p>

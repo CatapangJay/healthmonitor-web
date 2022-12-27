@@ -26,6 +26,10 @@ export class MainContentComponent implements OnInit {
           ({ ...c.payload.doc.data(), Id: c.payload.doc.id })))
     ).subscribe(data => {
       this.patientsInfo = data;
+
+      for (const patient of this.patientsInfo) {
+        this.getPulse(patient.Id);
+      }
     });
   }
 
@@ -41,13 +45,14 @@ export class MainContentComponent implements OnInit {
           ({ id: c.payload.doc.id, ...c.payload.doc.data() })))
     ).subscribe({
       next: (data) => {
+        let pulseEl = document.getElementById(`pulse-rate-${patientId}`)
         if (data.length > 0) {
           setTimeout(() => {}, 2000);
-          return data[0].pulse.toString();
+          pulseEl.innerHTML = data[0].pulse.toString();
           // setTimeout(() => this.receivedPulse = false, 2000);
         }
         else {
-          return 'N/A';
+          pulseEl.innerHTML = 'N/A';
         }
       }
     });

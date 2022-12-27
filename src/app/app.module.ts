@@ -18,6 +18,7 @@ import { CreatePatientComponent } from './components/create-patient/create-patie
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewPatientComponent } from './components/view-patient/view-patient.component';
 import { ViewPatientDetailsComponent } from './view-patient-details/view-patient-details.component';
+import { PatientInfoComponent } from './components/patient-info/patient-info.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ViewPatientDetailsComponent } from './view-patient-details/view-patient
     MainContentComponent,
     CreatePatientComponent,
     ViewPatientComponent,
-    ViewPatientDetailsComponent
+    ViewPatientDetailsComponent,
+    PatientInfoComponent
   ],
   imports: [
     BrowserModule,
