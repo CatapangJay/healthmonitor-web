@@ -22,6 +22,7 @@ export class ViewPatientComponent implements OnInit {
   initializePatient(pinfo: PatientInfo) {
     this.patientInfo = pinfo;
   }
+  
 
   // getPatientHeartrates() {
   //   this.hrService.getAllByPatientId(this.patientInfo?.Id).snapshotChanges().pipe(

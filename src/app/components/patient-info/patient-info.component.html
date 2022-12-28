@@ -1,1 +1,111 @@
-<p>patient-info works!</p>
+<div class="row">
+  <div class="col">
+    <div class="container px-2 pt-4">
+      <img
+        [src]="patientInfo.ImageUrl"
+        id="patient-image"
+        alt="Profile picture"
+        class="mb-3"
+        *ngIf="!isEmptyOrUndefined(patientInfo.ImageUrl)"
+      />
+      <div
+        class="rounded-circle d-flex align-items-center justify-content-center mb-3"
+        id="empty-img"
+        *ngIf="isEmptyOrUndefined(patientInfo.ImageUrl)"
+      >
+        <p
+          class="text-center text-white m-0 fs-2 fw-bold"
+          style="letter-spacing: 3px"
+        >
+          {{
+            (patientInfo.Firstname[0] | uppercase) +
+              (patientInfo.Lastname[0] | uppercase)
+          }}
+        </p>
+      </div>
+      <h5 class="text-primary text-truncate fw-bold">
+        {{
+          (patientInfo?.Lastname | uppercase) +
+            ", " +
+            (patientInfo?.Firstname | titlecase) +
+            " " +
+            (patientInfo?.Middlename[0] | uppercase) +
+            "."
+        }}
+      </h5>
+    </div>
+    <div class="container row text-grey">
+      <div class="container px-2 col">
+        <h5 class="card-title py-2 border-bottom">Patient Information</h5>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">First Name</div>
+          <div class="col-lg-7 col-sm-5">{{ patientInfo?.Firstname }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Middle Name</div>
+          <div class="col-lg-7 col-sm-5">{{ patientInfo?.Middlename }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Last Name</div>
+          <div class="col-lg-7 col-sm-5">{{ patientInfo?.Lastname }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Age</div>
+          <div class="col-lg-7 col-sm-5">{{ getAge() }} years old</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Birth Date</div>
+          <div class="col-lg-7 col-sm-5">
+            {{ patientInfo?.BirthDate?.toDate() | date : "mediumDate" }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Address</div>
+          <div class="col-lg-7 col-sm-5">{{ patientInfo?.address }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Phone</div>
+          <div class="col-lg-7 col-sm-5">{{ patientInfo?.phoneNumber }}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-5 col-sm-7 label fw-bold">Email</div>
+          <div class="col-lg-7 col-sm-5">{{ patientInfo?.email }}</div>
+        </div>
+      </div>
+      <!-- <div class="col" style="max-height: 80vh; overflow: scroll">
+      <table class="table table-primary table-striped table-hover">
+        <thead>
+          <th scope="col">#</th>
+          <th scope="col">Date Logged</th>
+          <th scope="col">Heart Rate</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hr of hrHistory; let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{ hr.dateAdded?.toDate() | date : "MMM d, y, h:mm a" }}</td>
+            <td>{{ hr.pulse }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+    </div>
+  </div>
+  <div class="col py-4">
+    <div class="col" style="max-height: 80vh; overflow: auto">
+      <table class="table table-primary table-striped table-hover">
+        <thead>
+          <th scope="col">#</th>
+          <th scope="col">Date Logged</th>
+          <th scope="col">Heart Rate</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hr of hrHistory; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ hr.dateAdded?.toDate() | date : "MMM d, yy, h:mm a" }}</td>
+            <td class="fw-bold">{{ hr.pulse }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

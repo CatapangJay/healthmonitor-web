@@ -1,12 +1,12 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 class="h2">Patients</h1>
+  <h1 class="h2 text-grey">Patients</h1>
 </div>
 
 <div class="d-flex justify-content-start gap-3 flex-wrap">
   <ng-container *ngFor="let patient of patientsInfo">
-    <div class="patient-card">
+    <!-- <div class="patient-card">
       <div class="patient-card-heading">
         <img
           [src]="patient.ImageUrl"
@@ -29,10 +29,10 @@
             }}
           </p>
         </div>
-        <!-- <div class="patient-pulse" [class.animate]="receivedPulse"> -->
-        <!-- <div class="patient-pulse">
+        <div class="patient-pulse" [class.animate]="receivedPulse">
+        <div class="patient-pulse">
           <div class="pulse-rate">{{ getPulse(patient.Id) }}</div>
-        </div> -->
+        </div>
         <div class="patient-pulse">
           <div class="pulse-rate" [id]="'pulse-rate-'+ patient.Id"></div>
         </div>
@@ -63,7 +63,7 @@
       </div>
       <div class="patient-container">
         <p class="patient-status-title">Status</p>
-        <!-- <p
+        <p
           class="patient-status"
           [ngClass]="{
             'text-danger':
@@ -73,10 +73,10 @@
           }"
         >
           {{ status }}
-        </p> -->
+        </p>
       </div>
       <div class="patient-container">
-        <!-- <button type="button" class="btn btn-warning" (click)="notifyPatient()"> -->
+        <!-- <button type="button" class="btn btn-warning" (click)="notifyPatient()">
         <button
           type="button"
           class="btn btn-warning"
@@ -87,8 +87,8 @@
           View Patient
         </button>
       </div>
-    </div>
-    <!-- <app-patient-card
+    </div> -->
+    <app-patient-card
       [patientInfo]="patient"
       [patientId]="patient.Id"
       [patientInitials]="
@@ -104,7 +104,7 @@
       "
       [imageUrl]="patient!.ImageUrl"
       [birthDate]="patient.BirthDate"
-    ></app-patient-card> -->
+    ></app-patient-card>
   </ng-container>
 </div>
 
@@ -131,8 +131,8 @@
   aria-hidden="true"
 ></app-create-patient>
 
-<app-view-patient
+<!-- <app-view-patient
   class="modal fade"
   id="viewpatientmodal"
   tabindex="-1"
-></app-view-patient>
+></app-view-patient> -->

@@ -7,7 +7,7 @@ import { HeartrateService } from 'src/app/services/heartrate.service';
 import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
-  selector: 'main [app-main-content]',
+  selector: 'app-main-content',
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss']
 })

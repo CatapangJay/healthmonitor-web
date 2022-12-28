@@ -1,0 +1,17 @@
+.patient-container {
+    width: 50%;
+}
+
+#patient-image {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+#empty-img {
+    width: 100px;
+    height: 100px;
+    background-color: #9d9ea0;
+}

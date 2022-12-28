@@ -49,12 +49,19 @@
   </div>
   <div class="patient-container">
     <!-- <button type="button" class="btn btn-warning" (click)="notifyPatient()"> -->
-    <button
+    <!-- <button
       type="button"
       class="btn btn-warning"
       data-bs-toggle="modal"
       data-bs-target="#viewpatientmodal"
       (click)="openPatientInfoModal()"
+    >
+      View Patient
+    </button> -->
+    <button
+      type="button"
+      class="btn btn-warning"
+      [routerLink]="patientId"
     >
       View Patient
     </button>

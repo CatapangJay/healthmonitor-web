@@ -17,8 +17,8 @@ export class PatientService {
     return this.patientsRef;
   }
 
-  public getPatientById(id:number) {
-
+  public getPatientById(id:string) {
+    return this.patientsRef.doc(id);
   }
 
   public createPatient(patient: PatientInfo){
