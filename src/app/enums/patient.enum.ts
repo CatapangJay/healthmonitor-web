@@ -1,0 +1,6 @@
+export enum STATUS {
+    NO_DATA = "N/A",
+    FINE = "FINE",
+    CRITICALLY_LOW = "CRITICALLY LOW",
+    CRITICALLY_HIGH = "CRITICALLY HIGH"
+}

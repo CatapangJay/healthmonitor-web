@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  title = 'HEALTHLINE';
+  title = 'HEALTH MONITOR';
+
+  constructor(public _router: Router){}
 }

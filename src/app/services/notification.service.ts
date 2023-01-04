@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/compat/firestore';
+import { Timestamp } from '@angular/fire/firestore';
 
 import { PatientNotif } from '../models/patient-notif';
 
@@ -16,8 +17,17 @@ export class NotificationService {
     return this.patientNotifsRef;
   }
 
+  public getById(id: string): AngularFirestoreDocument<PatientNotif> {
+    return this.patientNotifsRef.doc(id);
+  }
+
   public createPatientNotif(notif: PatientNotif): Promise<DocumentReference<PatientNotif>> {
-    notif.dateAdded = new Date();
+    notif.dateUpdated = Timestamp.fromDate(new Date());
     return this.patientNotifsRef.add({ ...notif });
+  }
+
+  public upsertPatientNotif(notif: PatientNotif): Promise<void> {
+    notif.dateUpdated = Timestamp.fromDate(new Date());
+    return this.patientNotifsRef.doc(notif.patientId).set({ ...notif });
   }
 }

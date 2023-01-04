@@ -2,24 +2,24 @@
   <div class="col">
     <div class="container px-2 pt-4">
       <img
-        [src]="patientInfo.ImageUrl"
+        [src]="patientInfo?.ImageUrl"
         id="patient-image"
         alt="Profile picture"
         class="mb-3"
-        *ngIf="!isEmptyOrUndefined(patientInfo.ImageUrl)"
+        *ngIf="!isEmptyOrUndefined(patientInfo?.ImageUrl)"
       />
       <div
         class="rounded-circle d-flex align-items-center justify-content-center mb-3"
         id="empty-img"
-        *ngIf="isEmptyOrUndefined(patientInfo.ImageUrl)"
+        *ngIf="isEmptyOrUndefined(patientInfo?.ImageUrl)"
       >
         <p
           class="text-center text-white m-0 fs-2 fw-bold"
           style="letter-spacing: 3px"
         >
           {{
-            (patientInfo.Firstname[0] | uppercase) +
-              (patientInfo.Lastname[0] | uppercase)
+            (patientInfo?.Firstname[0] | uppercase) +
+              (patientInfo?.Lastname[0] | uppercase)
           }}
         </p>
       </div>
@@ -101,7 +101,7 @@
         <tbody>
           <tr *ngFor="let hr of hrHistory; let i = index">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ hr.dateAdded?.toDate() | date : "MMM d, yy, h:mm a" }}</td>
+            <td>{{ hr.dateAdded?.toDate() | date : "MMM d, yy, h:mm:ss a" }}</td>
             <td class="fw-bold">{{ hr.pulse }}</td>
           </tr>
         </tbody>

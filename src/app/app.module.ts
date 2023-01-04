@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewPatientComponent } from './components/view-patient/view-patient.component';
 import { ViewPatientDetailsComponent } from './view-patient-details/view-patient-details.component';
 import { PatientInfoComponent } from './components/patient-info/patient-info.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { PatientInfoComponent } from './components/patient-info/patient-info.com
     CreatePatientComponent,
     ViewPatientComponent,
     ViewPatientDetailsComponent,
-    PatientInfoComponent
+    PatientInfoComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import { PatientInfoComponent } from './components/patient-info/patient-info.com
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [PatientService, HeartrateService, NotificationService],
+  providers: [PatientService, HeartrateService, NotificationService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

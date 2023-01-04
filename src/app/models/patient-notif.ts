@@ -1,6 +1,10 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export class PatientNotif {
     patientId: string;
+    pulseId: string;
+    header: string;
     message: string;
-    dateAdded: Date;
+    dateUpdated: Timestamp;
     alreadyViewed: boolean;
 }
