@@ -99,7 +99,7 @@
           <th scope="col">Heart Rate</th>
         </thead>
         <tbody>
-          <tr *ngFor="let hr of hrHistory; let i = index">
+          <tr *ngFor="let hr of hrHistory; let i = index" [class.table-danger]="hr.pulse < 60 || hr.pulse > 100">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ hr.dateAdded?.toDate() | date : "MMM d, yy, h:mm:ss a" }}</td>
             <td class="fw-bold">{{ hr.pulse }}</td>

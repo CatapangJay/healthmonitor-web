@@ -21,6 +21,8 @@ import { ViewPatientDetailsComponent } from './view-patient-details/view-patient
 import { PatientInfoComponent } from './components/patient-info/patient-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
+import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { AuthService } from './services/auth.service';
     ViewPatientComponent,
     ViewPatientDetailsComponent,
     PatientInfoComponent,
-    LoginComponent
+    LoginComponent,
+    EditPatientComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,7 @@ import { AuthService } from './services/auth.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [PatientService, HeartrateService, NotificationService, AuthService],
+  providers: [PatientService, HeartrateService, NotificationService, AuthService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,7 +15,7 @@ export class CreatePatientComponent implements OnInit {
     middleName: ['', Validators.required],
     lastName: ['', Validators.required],
     birthdate: ['', Validators.required],
-    patientImg: ['', Validators.required],
+    patientImg: [''],
     address: ['', Validators.required],
     email: ['', Validators.required],
     contactno: ['', Validators.required],
@@ -62,9 +62,10 @@ export class CreatePatientComponent implements OnInit {
   submit() {
     if (this.patientForm.valid){
       let birthdateDate = Timestamp.fromDate(new Date(this.birthdate.value))
+      let randomNumber = Math.floor(Math.random() * 10_000) + 1;
 
       const patient = new PatientInfo(
-        '',
+        randomNumber.toString(),
         this.firstName.value,
         this.middleName.value,
         this.lastName.value,
@@ -75,7 +76,7 @@ export class CreatePatientComponent implements OnInit {
         this.address.value
       )
 
-      this.service.createPatient(patient).then(
+      this.service.upsertPatient(patient).then(
         () => alert('Patient added')
       ).catch(err => console.log(err));
     }

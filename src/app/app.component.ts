@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  title = 'HEALTH MONITOR';
+  title = 'BRGY JANOPOL';
 
   constructor(public _router: Router){}
 }

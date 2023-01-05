@@ -7,6 +7,7 @@ import { Timestamp } from '@firebase/firestore-types';
 import { ViewPatientComponent } from '../view-patient/view-patient.component';
 import { PatientInfo } from 'src/app/models/patient-info';
 import { STATUS } from 'src/app/enums/patient.enum';
+import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
   selector: 'app-patient-card',
@@ -27,6 +28,7 @@ export class PatientCardComponent implements OnInit {
   @ViewChild(ViewPatientComponent) patientModal!: ViewPatientComponent;
 
   constructor(private heartRateService: HeartrateService,
+    private patientService: PatientService,
     private notifService: NotificationService) { }
 
   ngOnInit(): void {
@@ -60,7 +62,7 @@ export class PatientCardComponent implements OnInit {
                 }).catch(err => console.log('Error checking latest notif sync with latest pulse: ' + err))
               }
               else {
-                this.checkIfNotifIsCriticalAndNotViewed(this.patientId).then(val => {
+                this.checkIfNotifIsCriticalAndNotViewed(this.patientId, data[0].id).then(val => {
                   if (!val) {
                     this.notifyPatient(data[0].id, "Abnormal heart rate detected", "Please take a rest.");
                   }
@@ -127,14 +129,14 @@ export class PatientCardComponent implements OnInit {
     return false;
   }
 
-  async checkIfNotifIsCriticalAndNotViewed(patientId: string): Promise<boolean> {
+  async checkIfNotifIsCriticalAndNotViewed(patientId: string, latestPulseId: string): Promise<boolean> {
     const source$ = this.notifService.getById(patientId).get();
 
     const notif = await firstValueFrom(source$);
 
     if (notif === undefined || notif.data() === undefined) return false; // force to create notif
 
-    if (notif.data().header === "YOU ARE IN NEED OF MEDICAL ATTENTION!" && notif.data().alreadyViewed === false) {
+    if (notif.data().pulseId === latestPulseId || (notif.data().header === "YOU ARE IN NEED OF MEDICAL ATTENTION!" && notif.data().alreadyViewed === false)) {
       return true;
     }
 
@@ -207,4 +209,9 @@ export class PatientCardComponent implements OnInit {
     return str === undefined || str.length === 0;
   }
 
+  delete() {
+    this.patientService.deletePatient(this.patientId).then(val => {
+      console.log('Patient with id ' + this.patientId + ' deleted.')
+    });
+  }
 }

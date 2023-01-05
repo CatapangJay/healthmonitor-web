@@ -24,4 +24,12 @@ export class PatientService {
   public createPatient(patient: PatientInfo){
     return this.patientsRef.add({...patient});
   }
+
+  public deletePatient(patientId: string){
+    return this.patientsRef.doc(patientId).delete();
+  }
+
+  public upsertPatient(patient: PatientInfo): Promise<void> {
+    return this.patientsRef.doc(patient.Id).set({ ...patient });
+  }
 }

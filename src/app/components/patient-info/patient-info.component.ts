@@ -46,12 +46,41 @@ export class PatientInfoComponent implements OnInit {
     this.hrService.getAllByPatientId(patientId).snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
-          ({ ...c.payload.doc.data() })))
+          ({ ...c.payload.doc.data(), id: c.payload.doc.id })))
     ).subscribe({
       next: (data) => {
         if (data.length > 0) {
           this.hrHistory = data;
 
+          if (this.getStatus(data[0].pulse) !== STATUS.FINE) {
+            // check last 3 pulses if high or low
+            if (data.length >= 3) {
+              const allAreHighOrLowValue = data.slice(0, 3).every(p => p.pulse < 60 || p.pulse > 100);
+
+              if (allAreHighOrLowValue) {
+                this.checkIfPulseHasNotif(patientId, data[0].id).then(val => {
+                  if (!val) {
+                    this.notifyPatient(data[0].id, "YOU ARE IN NEED OF MEDICAL ATTENTION!", "Please consult the nearest doctor.");
+                  }
+                }).catch(err => console.log('Error checking latest notif sync with latest pulse: ' + err))
+              }
+              else {
+                this.checkIfNotifIsCriticalAndNotViewed(patientId, data[0].id).then(val => {
+                  if (!val) {
+                    this.notifyPatient(data[0].id, "Abnormal heart rate detected", "Please take a rest.");
+                  }
+                }).catch(err => console.log('Error checking latest notif sync with latest pulse: ' + err))
+              }
+            }
+            else {
+              // check if theres already a notif in the time
+              this.checkIfPulseHasNotif(patientId, data[0].id).then(val => {
+                if (!val) {
+                  this.notifyPatient(data[0].id, "Abnormal heart rate detected", "Please take a rest.");
+                }
+              }).catch(err => console.log('Error checking latest notif sync with latest pulse: ' + err))
+            }
+          }
           // notify patient if status is not fine
           // if (this.getStatus(data[0].pulse) !== STATUS.FINE) {
           //   // check if theres already a notif in the time
@@ -74,23 +103,50 @@ export class PatientInfoComponent implements OnInit {
     })
   }
 
-  async checkLatestNotifSyncWithLatestPulse(patientId: string, latestPulseDate: Date): Promise<boolean> {
+  notifyPatient(pulseId: string, header: string, message: string) {
+    let patientNotif = new PatientNotif();
+    patientNotif.patientId = this.patientInfo?.Id;
+    patientNotif.pulseId = pulseId;
+    patientNotif.header = header;
+    patientNotif.message = message;
+    // patientNotif.message = "You are in need of medical attention. Go to ER ASAP!";
+    patientNotif.alreadyViewed = false;
+
+    this.notifService.upsertPatientNotif(patientNotif)
+      .then(res => {
+        // alert("alerted patient!");
+        // make toast
+      })
+      .catch(err => {
+        // do toast and console log
+      });
+  }
+
+  async checkIfPulseHasNotif(patientId: string, latestPulseId: string): Promise<boolean> {
     const source$ = this.notifService.getById(patientId).get();
 
     const notif = await firstValueFrom(source$);
 
-    if (notif === undefined) return true; // force to create notif
+    if (notif === undefined || notif.data() === undefined) return false; // force to create notif
 
-    if (this.isWithinFiveSeconds(notif.data().dateUpdated.toDate(), latestPulseDate)) {
+    if (notif.data().pulseId === latestPulseId) {
       return true;
     }
-    // await this.notifService.getById(patientId).get().subscribe(notif => {
-    //   if (notif === undefined) result = false;
 
-    //   if (this.isWithinFiveSeconds(notif.data().dateUpdated, latestPulseDate)){
-    //     result = true;
-    //   }
-    // });
+    return false;
+  }
+
+  async checkIfNotifIsCriticalAndNotViewed(patientId: string, latestPulseId: string): Promise<boolean> {
+    const source$ = this.notifService.getById(patientId).get();
+
+    const notif = await firstValueFrom(source$);
+
+    if (notif === undefined || notif.data() === undefined) return false; // force to create notif
+
+    if (notif.data().pulseId === latestPulseId || (notif.data().header === "YOU ARE IN NEED OF MEDICAL ATTENTION!" && notif.data().alreadyViewed === false)) {
+      return true;
+    }
+
     return false;
   }
 
@@ -159,23 +215,6 @@ export class PatientInfoComponent implements OnInit {
 
     // Return true if the difference is less than 5000 (5 seconds in milliseconds)
     return diff < 5000;
-  }
-
-  notifyPatient(message: string) {
-    let patientNotif = new PatientNotif();
-    patientNotif.patientId = this.patientInfo?.Id;
-    patientNotif.message = message;
-    // patientNotif.message = "You are in need of medical attention. Go to ER ASAP!";
-    patientNotif.alreadyViewed = false;
-
-    this.notifService.upsertPatientNotif(patientNotif)
-      .then(res => {
-        alert("alerted patient!");
-        // make toast
-      })
-      .catch(err => {
-        // do toast and console log
-      });
   }
 
   isEmptyOrUndefined(str: string): boolean {
