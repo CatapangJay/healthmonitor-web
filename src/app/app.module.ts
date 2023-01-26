@@ -23,6 +23,9 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
 import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
 import { DatePipe } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { DatePipe } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgChartsModule,
+    HighchartsChartModule,
+    NgApexchartsModule
   ],
   providers: [PatientService, HeartrateService, NotificationService, AuthService, DatePipe],
   bootstrap: [AppComponent]

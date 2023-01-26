@@ -8,6 +8,22 @@ import { PatientPulse } from 'src/app/models/patient-pulse';
 import { HeartrateService } from 'src/app/services/heartrate.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PatientService } from 'src/app/services/patient.service';
+import * as Highcharts from 'highcharts';
+import { NgChartsModule } from 'ng2-charts';
+import * as moment from 'moment';
+import { ChartType } from 'chart.js';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexTitleSubtitle,
+  ApexDataLabels,
+  ApexFill,
+  ApexMarkers,
+  ApexYAxis,
+  ApexXAxis,
+  ApexTooltip,
+  ApexStroke
+} from "ng-apexcharts";
 
 @Component({
   selector: 'app-patient-info',
@@ -17,11 +33,27 @@ import { PatientService } from 'src/app/services/patient.service';
 export class PatientInfoComponent implements OnInit {
   patientInfo?: PatientInfo;
   hrHistory: PatientPulse[];
+  Highcharts = Highcharts;
+  chartConstructor = "chart";
+  chartCallback;
+
+  public series: ApexAxisChartSeries;
+  public chart: ApexChart;
+  public dataLabels: ApexDataLabels;
+  public markers: ApexMarkers;
+  public title: ApexTitleSubtitle;
+  public fill: ApexFill;
+  public yaxis: ApexYAxis;
+  public xaxis: ApexXAxis;
+  public tooltip: ApexTooltip;
+  public stroke: ApexStroke;
 
   constructor(private route: ActivatedRoute,
     private patientService: PatientService,
     private notifService: NotificationService,
-    private hrService: HeartrateService) { }
+    private hrService: HeartrateService) {
+    this.initChartData();
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(p => {
@@ -31,6 +63,81 @@ export class PatientInfoComponent implements OnInit {
     })
   }
 
+  public initChartData(): void {
+    this.stroke = {
+      colors: ['red'],
+      width: 3
+    }
+    this.chart = {
+      type: "area",
+      stacked: false,
+      height: 350,
+      zoom: {
+        type: "x",
+        enabled: true,
+        autoScaleYaxis: true
+      },
+      toolbar: {
+        autoSelected: "zoom"
+      }
+    };
+    this.dataLabels = {
+      enabled: false
+    };
+    this.markers = {
+      size: 0
+    };
+    this.title = {
+      text: "Heart rate Movement",
+      align: "left"
+    };
+    this.fill = {
+      colors: ['red'],
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 1,
+        inverseColors: false,
+        opacityFrom: 0.5,
+        opacityTo: 0,
+        stops: [0, 90, 100]
+      }
+    };
+    this.yaxis = {
+      labels: {
+        formatter: function (val) {
+          return (val).toFixed(0);
+        }
+      },
+      title: {
+        text: "Heart Rate"
+      }
+    };
+    this.xaxis = {
+      type: "datetime",
+      labels: {
+        datetimeFormatter: {
+          year: "yyyy",
+          month: "MM",
+          day: "dd",
+          hour: "HH",
+          minute: "mm"
+        }
+      }
+    };
+    this.tooltip = {
+      shared: false,
+      theme: 'dark',
+      y: {
+        formatter: function (val) {
+          return (val).toFixed(0);
+        }
+      },
+      x: {
+        format: "MMM d h:mm TT"
+      }
+    };
+  }
+
   getPatientInfo(patientId: string) {
     this.patientService.getPatientById(patientId)
       .snapshotChanges().pipe(
@@ -38,6 +145,7 @@ export class PatientInfoComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.patientInfo = data;
+          this.patientInfo.conditions = this.patientInfo.conditions.filter(c => c !== 'Others')
         }
       })
   }
@@ -51,6 +159,18 @@ export class PatientInfoComponent implements OnInit {
       next: (data) => {
         if (data.length > 0) {
           this.hrHistory = data;
+
+          let dates = [];
+          for (let i = 0; i < this.hrHistory.length; i++) {
+            dates.push([moment(this.hrHistory[i].dateAdded.toDate()).valueOf(), this.hrHistory[i].pulse]);
+          }
+
+          this.series = [
+            {
+              name: "HEART RATE",
+              data: dates
+            }
+          ];
 
           if (this.getStatus(data[0].pulse) !== STATUS.FINE) {
             // check last 3 pulses if high or low
