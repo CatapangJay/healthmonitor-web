@@ -113,16 +113,7 @@ export class PatientInfoComponent implements OnInit {
       }
     };
     this.xaxis = {
-      type: "datetime",
-      labels: {
-        datetimeFormatter: {
-          year: "yyyy",
-          month: "MM",
-          day: "dd",
-          hour: "HH",
-          minute: "mm"
-        }
-      }
+      type: "datetime"
     };
     this.tooltip = {
       shared: false,

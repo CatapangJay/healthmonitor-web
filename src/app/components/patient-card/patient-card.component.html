@@ -23,7 +23,16 @@
     </div>
   </div>
   <div class="patient-container">
-    <p class="patient-name">{{ patientName }}</p>
+    <p class="patient-name">
+      {{ patientName }}
+      <span
+        ><i class="bi bi-gender-male text-primary" *ngIf="patientInfo?.Sex === 'Male'"></i
+        ><i
+          class="bi bi-gender-female text-danger"
+          *ngIf="patientInfo?.Sex === 'Female'"
+        ></i
+      ></span>
+    </p>
     <p class="patient-id">{{ patientId }}</p>
   </div>
   <div class="patient-container">
