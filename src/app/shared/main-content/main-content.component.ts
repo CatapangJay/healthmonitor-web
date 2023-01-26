@@ -21,6 +21,7 @@ export class MainContentComponent implements OnInit {
   startAgeFilter: number;
   endAgeFilter: number;
   hasFilter: boolean = false;
+  nameFilter: string = '';
 
   conditions = [
     { name: 'Hypertension', checked: false },
@@ -62,6 +63,14 @@ export class MainContentComponent implements OnInit {
   submitFilter() {
     this.filteredPatients = this.patientsInfo;
 
+    if (this.nameFilter !== ''){
+      this.filteredPatients = this.filteredPatients.filter(p => {
+        const fullName = `${p.Firstname} ${p.Middlename} ${p.Lastname}`;
+
+        return fullName.toLowerCase().includes(this.nameFilter.toLowerCase());
+      })
+    }
+
     if (this.selectedSexFilter !== '') {
       if (this.selectedSexFilter !== 'Both') {
         this.filteredPatients = this.filteredPatients.filter(p => p.Sex.toLowerCase() === this.selectedSexFilter.toLowerCase())
@@ -85,6 +94,7 @@ export class MainContentComponent implements OnInit {
   }
 
   clearFilters() {
+    this.nameFilter = '';
     this.filteredPatients = this.patientsInfo;
   }
 

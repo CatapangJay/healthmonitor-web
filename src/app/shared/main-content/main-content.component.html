@@ -2,13 +2,26 @@
   class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
   <h1 class="h2 text-grey">Patients</h1>
-  <button
-    class="btn btn-light"
-    data-bs-toggle="modal"
-    data-bs-target="#filterModal"
-  >
-    <i class="bi bi-filter me-1"></i>Filter
-  </button>
+  <div class="d-flex">
+    <div>
+      <input
+        type="text"
+        placeholder="Search name of patient"
+        class="form-control"
+        [(ngModel)]="nameFilter"
+        (input)="submitFilter()"
+      />
+    </div>
+    <div>
+      <button
+        class="btn btn-light"
+        data-bs-toggle="modal"
+        data-bs-target="#filterModal"
+      >
+        <i class="bi bi-filter me-1"></i>Filters
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="d-flex justify-content-start gap-3 flex-wrap">
@@ -193,7 +206,9 @@
               [(ngModel)]="otherConditions"
               style="height: 100px"
             ></textarea
-            ><label for="conditions">Other Conditions (Separate by comma)</label>
+            ><label for="conditions"
+              >Other Conditions (Separate by comma)</label
+            >
           </div>
         </div>
       </div>
