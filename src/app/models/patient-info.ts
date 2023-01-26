@@ -8,9 +8,12 @@ export class PatientInfo {
         public Lastname: string,
         public ImageUrl: string,
         public BirthDate: Timestamp,
+        public Sex: string,
         public email: string,
         public phoneNumber: string,
-        public address: string
-        ) {
+        public address: string,
+        public conditions: string[] = [],
+        public otherConditions: string[] = [],
+    ) {
     }
 }

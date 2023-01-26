@@ -45,6 +45,20 @@
             <label for="middleName">Middle Name</label>
           </div>
         </div>
+        <div class="col-md-2">
+          <div class="form-floating">
+            <select
+              class="form-control"
+              id="sex"
+              formControlName="sex"
+              aria-label="Mode of Shipment"
+            >
+              <option selected value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <label for="sex">Sex</label>
+          </div>
+        </div>
         <div class="col-md-6">
           <div class="form-floating">
             <input
@@ -58,16 +72,17 @@
           </div>
         </div>
         <div class="col-lg-7">
-          <div class="form-floating">
-            <input
-              type="text"
-              formControlName="patientImg"
-              class="form-control"
-              id="patientImg"
-              placeholder="Patient Img Url"
-            />
-            <label for="middleName">Patient Img Url</label>
-          </div>
+          <input
+            type="file"
+            formControlName="patientImg"
+            class="form-control"
+            id="patientImg"
+            placeholder="Patient Img Url"
+            (change)="onFileChange($event)"
+            multiple="false"
+            accept="image/jpeg, image/png"
+          />
+          <label for="middleName">Patient Img Url</label>
         </div>
         <div class="col-md-12">
           <div class="form-floating">
@@ -106,6 +121,41 @@
               placeholder="Phone Number"
             />
             <label for="contactno">Phone Number</label>
+          </div>
+        </div>
+        <label for="floatingDescription" class="col-form-label border-top pb-0"
+          >Health Information</label
+        >
+        <div class="col-md-12">
+          <div class="col-sm-10">
+            <div formArrayName="conditionsArrF">
+              <div
+                *ngFor="
+                  let condition of conditionsArrForm.controls;
+                  index as i
+                "
+              >
+                <div [formGroupName]="i">
+                  <input
+                    type="checkbox"
+                    formControlName="checked"
+                  />
+                  {{ conditionsArrForm.at(i).value.name }}
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mt-2" *ngIf="checkOtherCondition()">
+              <textarea
+                class="form-control"
+                placeholder="Other Conditions"
+                formControlName="otherConditions"
+                id="otherConditions"
+                style="height: 100px"
+              ></textarea
+              ><label for="otherConditions"
+                >Other Conditions (Separate by comma)</label
+              >
+            </div>
           </div>
         </div>
       </div>

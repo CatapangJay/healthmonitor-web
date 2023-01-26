@@ -26,7 +26,8 @@ export class PatientCardComponent implements OnInit {
   public receivedPulse: boolean;
   public status: STATUS;
   @ViewChild(ViewPatientComponent) patientModal!: ViewPatientComponent;
-
+  private downloadUrl;
+  
   constructor(private heartRateService: HeartrateService,
     private patientService: PatientService,
     private notifService: NotificationService) { }
