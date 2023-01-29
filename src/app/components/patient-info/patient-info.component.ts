@@ -36,6 +36,7 @@ export class PatientInfoComponent implements OnInit {
   Highcharts = Highcharts;
   chartConstructor = "chart";
   chartCallback;
+  dailyAverageHR: string = 'N/A';
 
   public series: ApexAxisChartSeries;
   public chart: ApexChart;
@@ -162,6 +163,10 @@ export class PatientInfoComponent implements OnInit {
               data: dates
             }
           ];
+
+          const numbers = data.map(obj => obj.pulse);
+          const aveHeartRate = numbers.reduce((sum, current) => sum + current, 0) / numbers.length;
+          this.dailyAverageHR = aveHeartRate.toFixed(2);
 
           if (this.getStatus(data[0].pulse) !== STATUS.FINE) {
             // check last 3 pulses if high or low
