@@ -23,7 +23,7 @@
           }}
         </p>
       </div>
-      <h5 class="text-primary text-truncate fw-bold">
+      <h5 class="fs-1 text-primary text-truncate fw-bold">
         {{
           (patientInfo?.Lastname | uppercase) +
             ", " +
@@ -36,7 +36,20 @@
     </div>
     <div class="container row text-grey">
       <div class="container px-2 col">
-        <h5 class="card-title py-2 border-bottom">Patient Information</h5>
+        <div class="d-flex border-bottom gap-3 py-2 mb-2">
+          <h5 class="card-title py-2">Patient Information</h5>
+          <div>
+            <button
+              type="button"
+              class="btn btn-outline-dark me-3 d-print-none"
+              (click)="printThisPage()"
+              *ngIf="series"
+            >
+              <i class="bi bi-printer-fill me-1"></i>
+              Print Info
+            </button>
+          </div>
+        </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold text-danger">
             Ave. Daily Heart Rate
@@ -45,15 +58,21 @@
         </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold">First Name</div>
-          <div class="col-lg-7 col-sm-5">{{ patientInfo?.Firstname }}</div>
+          <div class="col-lg-7 col-sm-5">
+            {{ patientInfo?.Firstname | titlecase }}
+          </div>
         </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold">Middle Name</div>
-          <div class="col-lg-7 col-sm-5">{{ patientInfo?.Middlename }}</div>
+          <div class="col-lg-7 col-sm-5">
+            {{ patientInfo?.Middlename | titlecase }}
+          </div>
         </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold">Last Name</div>
-          <div class="col-lg-7 col-sm-5">{{ patientInfo?.Lastname }}</div>
+          <div class="col-lg-7 col-sm-5">
+            {{ patientInfo?.Lastname | titlecase }}
+          </div>
         </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold">Gender</div>
@@ -71,7 +90,9 @@
         </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold">Address</div>
-          <div class="col-lg-7 col-sm-5">{{ patientInfo?.address }}</div>
+          <div class="col-lg-7 col-sm-5">
+            {{ patientInfo?.address | titlecase }}
+          </div>
         </div>
         <div class="row mb-2">
           <div class="col-lg-5 col-sm-7 label fw-bold">Phone</div>
@@ -85,7 +106,7 @@
           <div class="col-lg-5 col-sm-7 label fw-bold">Conditions</div>
           <div class="d-flex flex-wrap">
             <div
-              class="me-1 mb-1"
+              class="me-1 mb-1 condition-pill"
               *ngFor="let condition of patientInfo?.conditions"
             >
               <span class="badge rounded-pill bg-danger p-2 px-3">{{
@@ -93,7 +114,7 @@
               }}</span>
             </div>
             <div
-              class="me-1 mb-1"
+              class="me-1 mb-1 condition-pill"
               *ngFor="let condition of patientInfo?.otherConditions"
             >
               <span class="badge rounded-pill bg-danger p-2 px-3">{{
@@ -105,9 +126,10 @@
       </div>
     </div>
   </div>
-  <div class="col py-4">
-    <ng-container *ngIf="series">
-      <apx-chart
+  <div class="col py-4 data-container">
+    <h5 class="py-2 border-bottom text-grey">Heart Rate Movement</h5>
+    <ng-container *ngIf="series" class="chart-container">
+      <apx-chart class="chart-actual"
         [series]="series"
         [chart]="chart"
         [dataLabels]="dataLabels"
@@ -121,7 +143,12 @@
         [autoUpdateSeries]="true"
       ></apx-chart
     ></ng-container>
-    <div class="col" style="max-height: 80vh; overflow: auto" *ngIf="hrHistory">
+    <h5 class="py-2 border-bottom text-grey">Heart Rate History</h5>
+    <div
+      class="col d-print-table"
+      style="max-height: 80vh; overflow: auto"
+      *ngIf="hrHistory"
+    >
       <table class="table table-primary table-striped table-hover">
         <thead>
           <th scope="col">#</th>

@@ -89,10 +89,6 @@ export class PatientInfoComponent implements OnInit {
     this.markers = {
       size: 0
     };
-    this.title = {
-      text: "Heart rate Movement",
-      align: "left"
-    };
     this.fill = {
       colors: ['red'],
       type: "gradient",
@@ -132,6 +128,14 @@ export class PatientInfoComponent implements OnInit {
         format: "MMM d h:mm TT"
       }
     };
+
+
+    // add the beforeprint event listener
+    // window.addEventListener('beforeprint', () => {
+    //   this.chart.redrawOnParentResize = true;
+    //   this.chart.width = 123232;
+    //   this.initChartData();
+    // });
   }
 
   getPatientInfo(patientId: string) {
@@ -303,7 +307,7 @@ export class PatientInfoComponent implements OnInit {
 
   isCriticallyHigh(pulse: number) {
     if (pulse > 100) return true;
-    
+
     return false;
   }
 
@@ -312,4 +316,16 @@ export class PatientInfoComponent implements OnInit {
 
     return false;
   }
+
+  printThisPage() {
+    window.print();
+  }
+
+  // function beforePrintHandler() {
+  //   // update chart options to redraw the chart
+  //   this.chart.redrawOnParentResize = true;
+  // }
+
+  // window.addEventListener(beforePrintHandler)
+  // window.addEventListener('beforeprint', beforePrintHandler);
 }

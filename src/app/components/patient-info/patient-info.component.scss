@@ -15,3 +15,45 @@
     height: 100px;
     background-color: #9d9ea0;
 }
+
+@media print {
+
+    /* hide the scrollbar */
+    #hr-table::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    /* optional: make the table fit the page width */
+    #hr-table-container {
+        overflow-x: visible !important;
+    }
+
+    .condition-pill {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .data-container {
+        page-break-inside: avoid !important;
+        width: 100vw !important;
+        /* prevent element from being split across pages */
+    }
+
+    .chart-container {
+        width: 100vw !important;
+        /* prevent element from being split across pages */
+    }
+
+    .chart-actual {
+        width: 100vw !important;
+        /* prevent element from being split across pages */
+    }
+
+    .apexcharts-svg {
+        width: 100vw !important;
+    }
+
+    .d-print-table {
+        width: 100% !important;
+    }
+}

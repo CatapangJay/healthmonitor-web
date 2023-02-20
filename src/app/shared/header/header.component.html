@@ -1,7 +1,7 @@
 
-<div class="container-fluid">
+<div class="container-fluid d-print-none">
   <span class="navbar-brand mb-0 app-title">{{ companyName }}</span>
-  <button class="btn btn-warning" (click)="logOut()" *ngIf="!(router.url === '/login')">
+  <button class="btn btn-warning d-print-none" (click)="logOut()" *ngIf="!(router.url === '/login')">
     <i class="bi bi-person-fill me-2"></i>Log out
   </button>
   <button
