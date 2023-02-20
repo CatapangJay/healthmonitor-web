@@ -24,6 +24,7 @@ import {
   ApexTooltip,
   ApexStroke
 } from "ng-apexcharts";
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-patient-info',
@@ -114,7 +115,10 @@ export class PatientInfoComponent implements OnInit {
       }
     };
     this.xaxis = {
-      type: "datetime"
+      type: "datetime",
+      labels: {
+        datetimeUTC: false
+      }
     };
     this.tooltip = {
       shared: false,
@@ -154,7 +158,8 @@ export class PatientInfoComponent implements OnInit {
 
           let dates = [];
           for (let i = 0; i < this.hrHistory.length; i++) {
-            dates.push([moment(this.hrHistory[i].dateAdded.toDate()).valueOf(), this.hrHistory[i].pulse]);
+            const dateAdded = moment(this.hrHistory[i].dateAdded.toDate()).valueOf();
+            dates.push([dateAdded, this.hrHistory[i].pulse]);
           }
 
           this.series = [
@@ -271,52 +276,11 @@ export class PatientInfoComponent implements OnInit {
     return Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
   }
 
-  private getStatus(pulse: number): STATUS {
+  public getStatus(pulse: number): STATUS {
     let status = STATUS.FINE;
 
     if (pulse < 60) status = STATUS.CRITICALLY_LOW;
     else if (pulse > 100) status = STATUS.CRITICALLY_HIGH;
-
-    // if (this.getAge() <= 20) {
-    //   if (pulse < 100) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 170) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 20 && this.getAge() <= 30) {
-    //   if (pulse < 95) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 162) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 30 && this.getAge() <= 35) {
-    //   if (pulse < 93) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 157) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 35 && this.getAge() <= 40) {
-    //   if (pulse < 90) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 153) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 40 && this.getAge() <= 45) {
-    //   if (pulse < 88) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 149) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 45 && this.getAge() <= 50) {
-    //   if (pulse < 85) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 145) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 50 && this.getAge() <= 55) {
-    //   if (pulse < 83) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 140) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 55 && this.getAge() <= 60) {
-    //   if (pulse < 80) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 136) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 60 && this.getAge() <= 65) {
-    //   if (pulse < 60) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 100) status = STATUS.CRITICALLY_HIGH;
-    // }
-    // else if (this.getAge() > 65 && this.getAge() <= 70) {
-    //   if (pulse < 60) status = STATUS.CRITICALLY_LOW;
-    //   else if (pulse > 100) status = STATUS.CRITICALLY_HIGH
-    // }
 
     return status;
   }
@@ -335,5 +299,17 @@ export class PatientInfoComponent implements OnInit {
 
   isEmptyOrUndefined(str: string): boolean {
     return str === undefined || str === null || str.length === 0;
+  }
+
+  isCriticallyHigh(pulse: number) {
+    if (pulse > 100) return true;
+    
+    return false;
+  }
+
+  isCriticallyLow(pulse: number) {
+    if (pulse < 60) return true;
+
+    return false;
   }
 }
