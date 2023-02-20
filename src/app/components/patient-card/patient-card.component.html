@@ -49,9 +49,10 @@
       class="patient-status"
       [ngClass]="{
         'text-danger':
-          status == 'CRITICALLY HIGH' || status == 'CRITICALLY LOW',
+          status == 'CRITICALLY HIGH',
         'text-warning': status == 'N/A',
-        'text-success': status == 'FINE'
+        'text-success': status == 'FINE',
+        'text-info':  status == 'CRITICALLY LOW'
       }"
     >
       {{ status }}
